@@ -1,20 +1,25 @@
-# 035 Remove Duplication
+# 036 Kanban Board: Story Card
 
-[![033 Clean Code Duplication](https://img.youtube.com/vi/-gX14jd9l_0/0.jpg)](https://www.youtube.com/watch?v=-gX14jd9l_0)
+[![034 KanbanBoard](https://img.youtube.com/vi/lbUoW09NnXs/0.jpg)](https://www.youtube.com/watch?v=lbUoW09NnXs)
+
+Based on customer feedback, we are going to pivot the task list to a [kanban board](https://en.wikipedia.org/wiki/Kanban_board) with three columns (todo, doing, done). This is a significant change. We will break this large change down into smaller stories to avoid breaking our product.
 
 ```
-The CSS properties flex:10% and flex:90% are each duplicated twice. 
-Change the CSS and HTML to remove this duplication while preserving the existing look and feel of the webpage.
+Given that tasks exist 
+When they are displayed 
+Then present them as story cards
 ```
 
 Steps:
-- Rename task-form-left to left-side in the CSS and HTML
-- Rename task-form-right to right-side in the CSS and HTML
-- Add the left-side class to each of the task description elements
-- Add the right-side class to each of the task status elements
-- Remove flex:10% from the CSS property .task-status
-- Remove the CSS property .task-description along with its flex:90% property definition
-- Remove the class task-description from all of the task descriptions
+- The class card should have a solid, black outline
+- The class card should have a 10px margin
+- The class card should have a 3px, gray shadow
+- The class card should be 175px wide
+- The row class should be removed from the tasks in the HTML
+- The row CSS declaration should be removed from the style element
 
 Resources:
-- https://en.wikipedia.org/wiki/Code_refactoring
+- https://www.w3schools.com/cssref/pr_border.asp
+- https://www.w3schools.com/cssref/pr_margin.asp
+- https://www.w3schools.com/cssref/css3_pr_box-shadow.asp
+- https://www.w3schools.com/cssref/pr_dim_width.asp

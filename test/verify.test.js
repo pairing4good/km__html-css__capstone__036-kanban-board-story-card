@@ -37,75 +37,59 @@ afterEach(async () => {
   await browser.close();
 });
 
-describe('the class task-form-left', () => {
-  it('should be renamed to left-side', async () => {
-    const leftSideElements = await page.$$('.left-side');
-    expect(leftSideElements.length).toBeGreaterThan(0);
+describe('the class card', () => {
+  it('should have a solid, black outline', async () => {
+    const border = await page.$eval('.card', (card) => {
+      var style = window.getComputedStyle(card);
+      return style.getPropertyValue('border-style');
+    });
+      
+    expect(border).toBe('solid');
+  });
+  
+  it('should have a 10px margin', async () => {
+    const margin = await page.$eval('.card', (card) => {
+      var style = window.getComputedStyle(card);
+      return style.getPropertyValue('margin');
+    });
+      
+    expect(margin).toBe('10px');
+  });
+  
+  it('should have a 3px, gray shadow', async () => {
+    const shadow = await page.$eval('.card', (card) => {
+      var style = window.getComputedStyle(card);
+      return style.getPropertyValue('box-shadow');
+    });
+      
+    expect(shadow).toBe('rgb(211, 211, 211) 3px 3px 0px 0px');
+  });
+  
+  it('should be 175px wide', async () => {
+    const width = await page.$eval('.card', (card) => {
+      var style = window.getComputedStyle(card);
+      return style.getPropertyValue('width');
+    });
+      
+    expect(width).toBe('175px');
+  });
+});
 
-    const innerHtml = await page.$eval('style', (style) => {
-      return style.innerHTML;
+describe('the row class', () => {
+  it('should be removed from the tasks in the HTML', async () => {
+    const rows = await page.$$('.row');
+    
+    expect(rows.length).toBe(0);
+  });
+});
+
+describe('the row css declaration', () => {
+      
+  it('should be removed from the style element', async () => {
+    const declarations = await page.$eval('style', (style) => {
+      return (style.innerHTML.match(/.row/g) || []).length;
     });
     
-    expect(innerHtml).toContain('.left-side');
-  });
-});
-
-describe('the class task-form-right', () => {
-  it('should be renamed to right-side', async () => {
-    const rightSideElements = await page.$$('.right-side');
-    expect(rightSideElements.length).toBeGreaterThan(0);
-
-    const innerHtml = await page.$eval('style', (style) => {
-      return style.innerHTML;
-    });
-    expect(innerHtml).toContain('.right-side');
-  });
-});
-
-describe('the left-side class', () => {
-  it('should be added to each of the task description elements', async () => {
-      const leftSideElements = await page.$$('[id^="task-row-"] > .left-side');
-      
-      expect(leftSideElements.length).toBe(3);
-  });
-});
-
-describe('the right-side class', () => {
-  it('should be added to each of the task status elements', async () => {
-      const leftSideElements = await page.$$('[id^="task-row-"] > .right-side');
-      
-      expect(leftSideElements.length).toBe(3);
-  });
-});
-
-describe('the CSS property .task-status', () => {
-  it('should not contain flex:10%', async () => {
-    const variableDefinitionCount = await page.$eval('style', (style) => {
-      return style.innerHTML.match(/flex.*:.*10%/g).length;
-    });
-    
-    expect(variableDefinitionCount).toEqual(1);
-  });
-});
-
-describe('the CSS property .task-description', () => {
-  it('should be removed along with its flex:90% property definition', async () => {
-    const containsTaskDescription = await page.$eval('style', (style) => {
-      return style.innerHTML.includes(".task-description");
-    });
-    expect(containsTaskDescription).toBe(false);
-
-    const flexCount = await page.$eval('style', (style) => {
-      return style.innerHTML.match(/flex.*:.*90%/g).length;
-    });
-    expect(flexCount).toEqual(1);
-  });
-});
-
-describe('the task-descriptions', () => {
-  it('should not have the task-description class', async () => {
-    const taskDescriptionElements = await page.$$('.task-description');
-
-    expect(taskDescriptionElements.length).toBe(0);
+    expect(declarations).toBe(0);
   });
 });
